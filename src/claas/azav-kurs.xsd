@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://xsd.coding-academy.com/claas/azav-kurs"
            xmlns="http://xsd.coding-academy.com/claas/azav-kurs"
@@ -17,8 +18,8 @@
                     <xs:sequence>
                       <xs:element name="inhalt" type="xs:string"/>
                       <xs:element name="dauer" type="xs:integer"/>
-                      <xs:element name="methodik" type="xs:string" default="Frontalunterricht"/>
-                      <xs:element name="material" type="xs:string" default="Folien, Notebooks"/>
+                      <xs:element name="methodik" type="xs:string" minOccurs="0" default="Frontalunterricht"/>
+                      <xs:element name="material" type="xs:string" minOccurs="0" default="Folien, Notebooks"/>
                     </xs:sequence>
                   </xs:complexType>
                 </xs:element>
