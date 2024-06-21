@@ -64,7 +64,7 @@ def main_generate_outputs(input_file, output_formats, output_dir):
         elif fmt in ["table-word"]:
             output_path = output_dir / f"{input_path.stem}_tab.docx"
             converter.save(output_path)
-            print(f"Word document saved to {output_path}")
+            print(f"Word tables saved to {output_path}")
 
 
 @click.command()

@@ -21,10 +21,10 @@ class TableWordConverter(CurriculumConverter):
         return Document()
 
     def add_module(self, output, title, description):
-        self._create_new_table(output)
+        pass
 
     def add_topic(self, output, contents, duration, methodik, material):
-        if self._need_new_table:
+        if self._need_new_table or self._current_table is None:
             self._create_new_table(output)
             self._need_new_table = False
         self._current_table_total_duration += int(duration)
