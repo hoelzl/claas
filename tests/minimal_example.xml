@@ -4,17 +4,9 @@
       xsi:schemaLocation="http://xsd.coding-academy.com/claas/azav-kurs https://raw.githubusercontent.com/hoelzl/claas/master/src/claas/azav-kurs.xsd">
   <modul>
     <titel>Modul 1 Titel</titel>
-    <beschreibung>Modul 1 Beschreibung</beschreibung>
     <thema>
-      <inhalt>Thema 1 Inhalt</inhalt>
-      <dauer>60</dauer>
-    </thema>
-    <bemerkung>Bemerkung zu Modul 1</bemerkung>
-    <thema>
-      <inhalt>Thema 2 Inhalt</inhalt>
-      <dauer>45</dauer>
-      <methodik>Gruppenarbeit</methodik>
-      <material>Handouts</material>
+      <inhalt>Thema 1.1</inhalt>
+      <dauer>2</dauer>
     </thema>
   </modul>
 </kurs>

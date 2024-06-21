@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kurs xmlns="http://xsd.coding-academy.com/claas/azav-kurs"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://xsd.coding-academy.com/claas/azav-kurs https://raw.githubusercontent.com/hoelzl/claas/master/src/claas/azav-kurs.xsd">
+  <modul>
+    <titel>Modul 1 Titel</titel>
+    <beschreibung>Modul 1 Beschreibung</beschreibung>
+    <thema>
+      <inhalt>Thema 1 Inhalt</inhalt>
+      <dauer>3</dauer>
+    </thema>
+    <bemerkung>Bemerkung 1</bemerkung>
+    <bemerkung>Bemerkung 2</bemerkung>
+    <thema>
+      <inhalt>Thema 2 Inhalt</inhalt>
+      <dauer>5</dauer>
+      <methodik>Gruppenarbeit</methodik>
+      <material>Handouts</material>
+    </thema>
+  </modul>
+</kurs>
