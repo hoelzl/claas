@@ -1,5 +1,4 @@
-import xml.etree.ElementTree as ET
-from pathlib import Path
+import xml.etree.ElementTree as ET  # noqa
 from abc import ABC, abstractmethod
 
 
@@ -34,6 +33,10 @@ class CurriculumConverter(ABC):
                     bemerkung = element.text
                     self.add_remark(output, bemerkung)
         return self.finalize_output(output)
+
+    def save(self, output_path):
+        document = self.convert()
+        document.save(output_path)
 
     @staticmethod
     def get_default_text(element, default):

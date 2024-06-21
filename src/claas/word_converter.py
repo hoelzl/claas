@@ -28,7 +28,3 @@ class WordConverter(CurriculumConverter):
 
     def finalize_output(self, output):
         return output
-
-    def save(self, output_path):
-        document = self.convert()
-        document.save(output_path)
