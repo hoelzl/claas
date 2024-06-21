@@ -1,18 +1,20 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<kurs xmlns="http://xsd.coding-academy.com/azav-kurs"
+<?xml version="1.0" encoding="UTF-8"?>
+<kurs xmlns="http://xsd.coding-academy.com/claas/azav-kurs"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="https://github.com/hoelzl/claas/blob/master/src/claas/azav-kurs.xsd">
-  <titel>Softwareentwicklung mit KI-Schwerpunkt</titel>
+      xsi:schemaLocation="http://xsd.coding-academy.com/claas/azav-kurs https://raw.githubusercontent.com/hoelzl/claas/master/src/claas/azav-kurs.xsd">
   <modul>
-    <titel>Modul 1</titel>
-    <beschreibung>Das ist Modul 1</beschreibung>
-    <section>
-      <title>Section 1</title>
-      <content>Das ist Section 1</content>
-    </section>
-    <section>
-      <title>Section 2</title>
-      <content>Das ist Section 2</content>
-    </section>
+    <titel>Modul 1 Titel</titel>
+    <beschreibung>Modul 1 Beschreibung</beschreibung>
+    <thema>
+      <inhalt>Thema 1 Inhalt</inhalt>
+      <dauer>60</dauer>
+    </thema>
+    <bemerkung>Bemerkung zu Modul 1</bemerkung>
+    <thema>
+      <inhalt>Thema 2 Inhalt</inhalt>
+      <dauer>45</dauer>
+      <methodik>Gruppenarbeit</methodik>
+      <material>Handouts</material>
+    </thema>
   </modul>
 </kurs>
