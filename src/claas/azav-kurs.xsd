@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="kurs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="modul" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="titel" type="xs:string"/>
+              <xs:element name="beschreibung" type="xs:string"
+                          minOccurs="0"/>
+              <xs:choice maxOccurs="unbounded">
+                <xs:element name="thema">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="inhalt" type="xs:string"/>
+                      <xs:element name="dauer" type="xs:integer"/>
+                      <xs:element name="methodik" type="xs:string"
+                                  default="Frontalunterricht"/>
+                      <xs:element name="material" type="xs:string"
+                                  default="Folien, Notebooks"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="bemerkung" type="xs:string"/>
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
