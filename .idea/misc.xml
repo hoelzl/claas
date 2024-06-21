@@ -3,7 +3,7 @@
   <component name="Black">
     <option name="enabledOnReformat" value="true" />
     <option name="enabledOnSave" value="true" />
-    <option name="sdkName" value="cam-basic" />
+    <option name="sdkName" value="claas" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

@@ -12,7 +12,7 @@ class MarkdownConverter(CurriculumConverter):
 
     def add_topic(self, output, contents, duration, methodik, material):
         output.append(f"## Thema: {contents}")
-        output.append(f"- **Dauer:** {duration} Minuten")
+        output.append(f"- **Dauer:** {duration} Einheiten")
         output.append(f"- **Methodik:** {methodik}")
         output.append(f"- **Material:** {material}\n")
 

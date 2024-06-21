@@ -1,5 +1,4 @@
 import xml.etree.ElementTree as ET  # noqa
-from pathlib import Path
 
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT

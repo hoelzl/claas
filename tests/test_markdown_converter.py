@@ -6,7 +6,7 @@ def test_markdown_converter_minimal(minimal_example):
     expected = (
         "# Modul 1 Titel\n"
         "## Thema: Thema 1.1\n"
-        "- **Dauer:** 2 Minuten\n"
+        "- **Dauer:** 2 Einheiten\n"
         "- **Methodik:** Frontalunterricht\n"
         "- **Material:** Folien, Notebooks\n"
     )
@@ -22,7 +22,7 @@ def test_markdown_converter_full(full_example):
         "Modul 1 Beschreibung\n"
         "\n"
         "## Thema: Thema 1 Inhalt\n"
-        "- **Dauer:** 3 Minuten\n"
+        "- **Dauer:** 3 Einheiten\n"
         "- **Methodik:** Frontalunterricht\n"
         "- **Material:** Folien, Notebooks\n"
         "\n"
@@ -33,7 +33,7 @@ def test_markdown_converter_full(full_example):
         "Bemerkung 2\n"
         "\n"
         "## Thema: Thema 2 Inhalt\n"
-        "- **Dauer:** 5 Minuten\n"
+        "- **Dauer:** 5 Einheiten\n"
         "- **Methodik:** Gruppenarbeit\n"
         "- **Material:** Handouts\n"
     )

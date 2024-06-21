@@ -13,7 +13,7 @@ class HtmlConverter(CurriculumConverter):
     def add_topic(self, output, contents, duration, methodik, material):
         output.append(f"<h2>Thema: {contents}</h2>")
         output.append(f"<ul>")
-        output.append(f"<li><strong>Dauer:</strong> {duration} Minuten</li>")
+        output.append(f"<li><strong>Dauer:</strong> {duration} Einheiten</li>")
         output.append(f"<li><strong>Methodik:</strong> {methodik}</li>")
         output.append(f"<li><strong>Material:</strong> {material}</li>")
         output.append(f"</ul>")
