@@ -8,6 +8,7 @@ from watchdog.events import FileSystemEventHandler
 
 from claas.html_converter import HtmlConverter
 from claas.markdown_converter import MarkdownConverter
+from claas.table_html_converter import TableHtmlConverter
 from claas.word_converter import WordConverter
 from claas.table_word_converter import TableWordConverter
 
@@ -37,6 +38,7 @@ def main_generate_outputs(input_file, output_formats, output_dir):
             "markdown": (MarkdownConverter, ".md", "Markdown file"),
             "html": (HtmlConverter, ".html", "HTML file"),
             "word": (WordConverter, ".docx", "Word document"),
+            "table-html": (TableHtmlConverter, ".html", "HTML tables"),
             "table-word": (TableWordConverter, ".tab.docx", "Word tables"),
         }
 
@@ -57,7 +59,7 @@ def main_generate_outputs(input_file, output_formats, output_dir):
     "--output-formats",
     "-o",
     multiple=True,
-    type=click.Choice(["markdown", "html", "word", "table-word", "all"]),
+    type=click.Choice(["markdown", "html", "word", "table-html", "table-word", "all"]),
     default=["html"],
     help="Output formats to generate",
 )

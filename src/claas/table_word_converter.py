@@ -23,14 +23,23 @@ class TableWordConverter(CurriculumConverter):
         return document
 
     def finalize_output(self, output) -> Document:
+        if self._current_table:
+            self._add_table_footer()
         return output
 
     def start_module(self, output, title: str, description: str):
-        pass
+        if self._current_table:
+            self._add_table_footer()
+            output.add_paragraph()  # Add space between tables
 
-    def add_topic(
-        self, output, contents: str, duration: str, methodik: str, material: str
-    ):
+        output.add_heading(title, level=2)
+        if description:
+            output.add_paragraph(description)
+
+        self._need_new_table = True
+
+    def add_topic(self, output, contents: str, duration: str, methodik: str,
+            material: str):
         if self._need_new_table or self._current_table is None:
             self._create_new_table(output)
             self._need_new_table = False
@@ -46,7 +55,7 @@ class TableWordConverter(CurriculumConverter):
         self._last_output = "row"
 
     def add_remark(self, output, bemerkung: str):
-        if self._last_output == "row":
+        if self._current_table:
             self._add_table_footer()
             output.add_paragraph()  # Add space between tables
         # Add the remark as a bold paragraph
