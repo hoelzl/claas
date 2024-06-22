@@ -25,27 +25,30 @@ class FileChangeHandler(FileSystemEventHandler):
 
 
 def main_generate_outputs(input_file, output_formats, output_dir):
-    input_path = Path(input_file)
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    input_tree = ET.parse(input_path)
-    if "all" in output_formats:
-        output_formats = ["markdown", "html", "word", "table-word"]
+    try:
+        input_path = Path(input_file)
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        input_tree = ET.parse(input_path)
+        if "all" in output_formats:
+            output_formats = ["markdown", "html", "word", "table-word"]
 
-    converters = {
-        "markdown": (MarkdownConverter, ".md", "Markdown file"),
-        "html": (HtmlConverter, ".html", "HTML file"),
-        "word": (WordConverter, ".docx", "Word document"),
-        "table-word": (TableWordConverter, ".tab.docx", "Word tables"),
-    }
+        converters = {
+            "markdown": (MarkdownConverter, ".md", "Markdown file"),
+            "html": (HtmlConverter, ".html", "HTML file"),
+            "word": (WordConverter, ".docx", "Word document"),
+            "table-word": (TableWordConverter, ".tab.docx", "Word tables"),
+        }
 
-    for fmt in output_formats:
-        converter_class, suffix, doc_name = converters[fmt]
-        converter = converter_class(input_tree)
+        for fmt in output_formats:
+            converter_class, suffix, doc_name = converters[fmt]
+            converter = converter_class(input_tree)
 
-        output_path = output_dir / f"{input_path.stem}{suffix}"
-        converter.save(output_path)
-        print(f"{doc_name} saved to {output_path}")
+            output_path = output_dir / f"{input_path.stem}{suffix}"
+            converter.save(output_path)
+            print(f"{doc_name} saved to {output_path}")
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 @click.command()
