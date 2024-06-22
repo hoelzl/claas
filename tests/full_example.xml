@@ -2,6 +2,7 @@
 <kurs xmlns="http://xsd.coding-academy.com/claas/azav-kurs"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://xsd.coding-academy.com/claas/azav-kurs https://raw.githubusercontent.com/hoelzl/claas/master/src/claas/azav-kurs.xsd">
+  <titel>Kurs Titel</titel>
   <modul>
     <titel>Modul 1 Titel</titel>
     <beschreibung>Modul 1 Beschreibung</beschreibung>

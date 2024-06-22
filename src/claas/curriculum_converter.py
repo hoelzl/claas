@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET  # noqa
 from abc import ABC, abstractmethod
+from typing import Any
 
 
 class CurriculumConverter(ABC):
@@ -7,14 +8,18 @@ class CurriculumConverter(ABC):
         self.tree = tree
         self.root = self.tree.getroot()
         self.namespace = {"ns": "http://xsd.coding-academy.com/claas/azav-kurs"}
+        self.output = None
 
     def convert(self):
-        output = self.start_output()
+        title = self.root.find("ns:titel", self.namespace).text
+        output = self.start_output(title)
         for module in self.root.findall("ns:modul", self.namespace):
             module_title = module.find("ns:titel", self.namespace).text
-            module_description = module.find("ns:beschreibung", self.namespace)
+            module_description = self.get_default_text(
+                module.find("ns:beschreibung", self.namespace), ""
+            )
 
-            self.add_module(output, module_title, module_description)
+            self.start_module(output, module_title, module_description)
 
             for element in module:
                 if element.tag.endswith("thema"):
@@ -32,32 +37,40 @@ class CurriculumConverter(ABC):
                 elif element.tag.endswith("bemerkung"):
                     bemerkung = element.text
                     self.add_remark(output, bemerkung)
+
+            self.finalize_module(output)
         return self.finalize_output(output)
 
     def save(self, output_path):
-        document = self.convert()
-        document.save(output_path)
+        doc = self.convert()
+        with open(output_path, "w") as f:
+            f.write(doc)
 
     @staticmethod
     def get_default_text(element, default):
         return element.text if element is not None else default
 
     @abstractmethod
-    def start_output(self):
+    def start_output(self, title: str):
         pass
 
     @abstractmethod
-    def add_module(self, output, title, description):
+    def finalize_output(self, output) -> Any:
         pass
 
     @abstractmethod
-    def add_topic(self, output, contents, duration, methodik, material):
+    def start_module(self, output, title: str, description: str):
+        pass
+
+    def finalize_module(self, output):
         pass
 
     @abstractmethod
-    def add_remark(self, output, bemerkung):
+    def add_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
         pass
 
     @abstractmethod
-    def finalize_output(self, output):
+    def add_remark(self, output, text: str):
         pass

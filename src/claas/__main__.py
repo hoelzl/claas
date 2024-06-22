@@ -33,38 +33,19 @@ def main_generate_outputs(input_file, output_formats, output_dir):
         output_formats = ["markdown", "html", "word", "table-word"]
 
     converters = {
-        "markdown": MarkdownConverter,
-        "html": HtmlConverter,
-        "word": WordConverter,
-        "table-word": TableWordConverter,
+        "markdown": (MarkdownConverter, ".md", "Markdown file"),
+        "html": (HtmlConverter, ".html", "HTML file"),
+        "word": (WordConverter, ".docx", "Word document"),
+        "table-word": (TableWordConverter, ".tab.docx", "Word tables"),
     }
 
     for fmt in output_formats:
-        converter_class = converters[fmt]
+        converter_class, suffix, doc_name = converters[fmt]
         converter = converter_class(input_tree)
-        output_content = converter.convert()
 
-        if fmt == "markdown":
-            output_path = output_dir / f"{input_path.stem}.md"
-            with open(output_path, "w") as f:
-                f.write(output_content)
-            print(f"Markdown file saved to {output_path}")
-
-        elif fmt == "html":
-            output_path = output_dir / f"{input_path.stem}.html"
-            with open(output_path, "w") as f:
-                f.write(output_content)
-            print(f"HTML file saved to {output_path}")
-
-        elif fmt in ["word"]:
-            output_path = output_dir / f"{input_path.stem}.docx"
-            converter.save(output_path)
-            print(f"Word document saved to {output_path}")
-
-        elif fmt in ["table-word"]:
-            output_path = output_dir / f"{input_path.stem}_tab.docx"
-            converter.save(output_path)
-            print(f"Word tables saved to {output_path}")
+        output_path = output_dir / f"{input_path.stem}{suffix}"
+        converter.save(output_path)
+        print(f"{doc_name} saved to {output_path}")
 
 
 @click.command()

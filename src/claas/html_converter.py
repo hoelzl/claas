@@ -2,26 +2,36 @@ from claas.curriculum_converter import CurriculumConverter
 
 
 class HtmlConverter(CurriculumConverter):
-    def start_output(self):
-        return ["<html><body>"]
+    def start_output(self, title) -> list[str]:
+        prefix = [
+            "<html>",
+            "<head>",
+            f"<title>Lehrplan: {title}</title>",
+            "</head>",
+            "<body>",
+            f"<h1>{title}</h1>",
+        ]
+        return prefix
 
-    def add_module(self, output, title, description):
-        output.append(f"<h1>{title}</h1>")
-        if description is not None:
-            output.append(f"<p>{description.text}</p>")
+    def finalize_output(self, output) -> str:
+        output.extend(["</body>", "</html>"])
+        return "\n".join(output)
 
-    def add_topic(self, output, contents, duration, methodik, material):
-        output.append(f"<h2>Thema: {contents}</h2>")
+    def start_module(self, output, title: str, description: str):
+        output.append(f"<h2>{title}</h2>")
+        if description:
+            output.append(f"<p>{description}</p>")
         output.append(f"<ul>")
-        output.append(f"<li><strong>Dauer:</strong> {duration} Einheiten</li>")
-        output.append(f"<li><strong>Methodik:</strong> {methodik}</li>")
-        output.append(f"<li><strong>Material:</strong> {material}</li>")
+
+    def finalize_module(self, output):
         output.append(f"</ul>")
 
-    def add_remark(self, output, bemerkung):
-        output.append(f"<h2>Bemerkung</h2>")
-        output.append(f"<p>{bemerkung}</p>")
+    def add_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
+        output.append(f"<li>{contents} ({duration} UE)</li>")
 
-    def finalize_output(self, output):
-        output.append("</body></html>")
-        return "\n".join(output)
+    def add_remark(self, output, text: str):
+        output.append(f"</ul>")
+        output.append(f"<h3>{text}</h3>")
+        output.append(f"<ul>")

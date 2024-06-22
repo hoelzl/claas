@@ -7,6 +7,7 @@
   <xs:element name="kurs">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="titel" type="xs:string"/>
         <xs:element name="modul" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>

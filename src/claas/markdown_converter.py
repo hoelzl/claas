@@ -2,23 +2,21 @@ from claas.curriculum_converter import CurriculumConverter
 
 
 class MarkdownConverter(CurriculumConverter):
-    def start_output(self):
-        return []
+    def start_output(self, title) -> list[str]:
+        return [f"# {title}"]
 
-    def add_module(self, output, title, description):
-        output.append(f"# {title}")
-        if description is not None:
-            output.append(f"\n{description.text}\n")
-
-    def add_topic(self, output, contents, duration, methodik, material):
-        output.append(f"## Thema: {contents}")
-        output.append(f"- **Dauer:** {duration} Einheiten")
-        output.append(f"- **Methodik:** {methodik}")
-        output.append(f"- **Material:** {material}\n")
-
-    def add_remark(self, output, bemerkung):
-        output.append(f"## Bemerkung")
-        output.append(f"{bemerkung}\n")
-
-    def finalize_output(self, output):
+    def finalize_output(self, output) -> str:
         return "\n".join(output)
+
+    def start_module(self, output, title: str, description: str):
+        output.append(f"## {title}")
+        if description:
+            output.append(f"\n{description}\n")
+
+    def add_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
+        output.append(f"- {contents} ({duration} UE)")
+
+    def add_remark(self, output, text: str):
+        output.append(f"\n### {text}\n")

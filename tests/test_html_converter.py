@@ -1,18 +1,21 @@
 from claas.html_converter import HtmlConverter
-from fixtures import minimal_example, full_example
+from fixtures import full_example, minimal_example
 
 
 def test_html_converter_minimal(minimal_example):
     expected = (
-        "<html><body>\n"
-        "<h1>Modul 1 Titel</h1>\n"
-        "<h2>Thema: Thema 1.1</h2>\n"
+        "<html>\n"
+        "<head>\n"
+        "<title>Lehrplan: Kurs Titel</title>\n"
+        "</head>\n"
+        "<body>\n"
+        "<h1>Kurs Titel</h1>\n"
+        "<h2>Modul 1 Titel</h2>\n"
         "<ul>\n"
-        "<li><strong>Dauer:</strong> 2 Einheiten</li>\n"
-        "<li><strong>Methodik:</strong> Frontalunterricht</li>\n"
-        "<li><strong>Material:</strong> Folien, Notebooks</li>\n"
+        "<li>Thema 1.1 (2 UE)</li>\n"
         "</ul>\n"
-        "</body></html>"
+        "</body>\n"
+        "</html>"
     )
     converter = HtmlConverter(minimal_example)
 
@@ -21,26 +24,26 @@ def test_html_converter_minimal(minimal_example):
 
 def test_html_converter_full(full_example):
     expected = (
-        "<html><body>\n"
-        "<h1>Modul 1 Titel</h1>\n"
+        "<html>\n"
+        "<head>\n"
+        "<title>Lehrplan: Kurs Titel</title>\n"
+        "</head>\n"
+        "<body>\n"
+        "<h1>Kurs Titel</h1>\n"
+        "<h2>Modul 1 Titel</h2>\n"
         "<p>Modul 1 Beschreibung</p>\n"
-        "<h2>Thema: Thema 1 Inhalt</h2>\n"
         "<ul>\n"
-        "<li><strong>Dauer:</strong> 3 Einheiten</li>\n"
-        "<li><strong>Methodik:</strong> Frontalunterricht</li>\n"
-        "<li><strong>Material:</strong> Folien, Notebooks</li>\n"
+        "<li>Thema 1 Inhalt (3 UE)</li>\n"
         "</ul>\n"
-        "<h2>Bemerkung</h2>\n"
-        "<p>Bemerkung 1</p>\n"
-        "<h2>Bemerkung</h2>\n"
-        "<p>Bemerkung 2</p>\n"
-        "<h2>Thema: Thema 2 Inhalt</h2>\n"
+        "<h3>Bemerkung 1</h3>\n"
         "<ul>\n"
-        "<li><strong>Dauer:</strong> 5 Einheiten</li>\n"
-        "<li><strong>Methodik:</strong> Gruppenarbeit</li>\n"
-        "<li><strong>Material:</strong> Handouts</li>\n"
         "</ul>\n"
-        "</body></html>"
+        "<h3>Bemerkung 2</h3>\n"
+        "<ul>\n"
+        "<li>Thema 2 Inhalt (5 UE)</li>\n"
+        "</ul>\n"
+        "</body>\n"
+        "</html>"
     )
     converter = HtmlConverter(full_example)
 

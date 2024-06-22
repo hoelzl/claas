@@ -17,13 +17,20 @@ class TableWordConverter(CurriculumConverter):
         self._need_new_table = True
         self._last_output = None
 
-    def start_output(self):
-        return Document()
+    def start_output(self, title: str) -> Document:
+        document = Document()
+        document.add_heading(title, level=1)
+        return document
 
-    def add_module(self, output, title, description):
+    def finalize_output(self, output) -> Document:
+        return output
+
+    def start_module(self, output, title: str, description: str):
         pass
 
-    def add_topic(self, output, contents, duration, methodik, material):
+    def add_topic(
+        self, output, contents: str, duration: str, methodik: str, material: str
+    ):
         if self._need_new_table or self._current_table is None:
             self._create_new_table(output)
             self._need_new_table = False
@@ -38,7 +45,7 @@ class TableWordConverter(CurriculumConverter):
         self._set_cell_margins(row_cells)
         self._last_output = "row"
 
-    def add_remark(self, output, bemerkung):
+    def add_remark(self, output, bemerkung: str):
         if self._last_output == "row":
             self._add_table_footer()
             output.add_paragraph()  # Add space between tables
@@ -49,6 +56,10 @@ class TableWordConverter(CurriculumConverter):
         p.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
         self._need_new_table = True
         self._last_output = "remark"
+
+    def save(self, output_path):
+        doc = self.convert()
+        doc.save(output_path)
 
     def _create_new_table(self, output):
         self._current_table = output.add_table(rows=1, cols=4)
@@ -121,6 +132,3 @@ class TableWordConverter(CurriculumConverter):
                 node.set(qn("w:type"), "dxa")
                 tcMar.append(node)
             tcPr.append(tcMar)
-
-    def finalize_output(self, output):
-        return output
