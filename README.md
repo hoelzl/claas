@@ -15,7 +15,7 @@ in the root directory (i.e., the directory where `pyproject.toml` and
 
 After building the package you can install it with pip:
 ```shell script
-pip install dist/claas-0.0.1-py3-none-any.whl
+pip install dist/claas-0.1.0-py3-none-any.whl
 ```
 
 To install the package so that it can be used for development purposes
