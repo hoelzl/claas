@@ -29,7 +29,7 @@ class TableWordConverter(CurriculumConverter):
     def start_module(self, output, title: str, description: str):
         if self._current_table:
             self._add_table_footer()
-            output.add_paragraph()  # Add space between tables
+            output.add_page_break()
 
         output.add_heading(title, level=2)
         if description:
