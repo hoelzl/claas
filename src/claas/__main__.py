@@ -38,7 +38,7 @@ def main_generate_outputs(input_file, output_formats, output_dir):
             "markdown": (MarkdownConverter, ".md", "Markdown file"),
             "html": (HtmlConverter, ".html", "HTML file"),
             "word": (WordConverter, ".docx", "Word document"),
-            "table-html": (TableHtmlConverter, ".html", "HTML tables"),
+            "table-html": (TableHtmlConverter, ".tab.html", "HTML tables"),
             "table-word": (TableWordConverter, ".tab.docx", "Word tables"),
         }
 
