@@ -1,16 +1,16 @@
+import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
-import time
 
 import click
-from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 
 from claas.html_converter import HtmlConverter
 from claas.markdown_converter import MarkdownConverter
 from claas.table_html_converter import TableHtmlConverter
-from claas.word_converter import WordConverter
 from claas.table_word_converter import TableWordConverter
+from claas.word_converter import WordConverter
 
 
 class FileChangeHandler(FileSystemEventHandler):
@@ -25,6 +25,15 @@ class FileChangeHandler(FileSystemEventHandler):
             main_generate_outputs(self.input_file, self.output_formats, self.output_dir)
 
 
+converters = {
+    "markdown": (MarkdownConverter, ".md", "Markdown file"),
+    "html": (HtmlConverter, ".html", "HTML file"),
+    "word": (WordConverter, ".docx", "Word document"),
+    "html-table": (TableHtmlConverter, ".tab.html", "HTML tables"),
+    "word-table": (TableWordConverter, ".tab.docx", "Word tables"),
+}
+
+
 def main_generate_outputs(input_file, output_formats, output_dir):
     try:
         input_path = Path(input_file)
@@ -32,15 +41,7 @@ def main_generate_outputs(input_file, output_formats, output_dir):
         output_dir.mkdir(parents=True, exist_ok=True)
         input_tree = ET.parse(input_path)
         if "all" in output_formats:
-            output_formats = ["markdown", "html", "word", "table-word"]
-
-        converters = {
-            "markdown": (MarkdownConverter, ".md", "Markdown file"),
-            "html": (HtmlConverter, ".html", "HTML file"),
-            "word": (WordConverter, ".docx", "Word document"),
-            "table-html": (TableHtmlConverter, ".tab.html", "HTML tables"),
-            "table-word": (TableWordConverter, ".tab.docx", "Word tables"),
-        }
+            output_formats = list(converters.keys())
 
         for fmt in output_formats:
             converter_class, suffix, doc_name = converters[fmt]
@@ -59,7 +60,7 @@ def main_generate_outputs(input_file, output_formats, output_dir):
     "--output-formats",
     "-o",
     multiple=True,
-    type=click.Choice(["markdown", "html", "word", "table-html", "table-word", "all"]),
+    type=click.Choice(["markdown", "html", "word", "html-table", "word-table", "all"]),
     default=["html"],
     help="Output formats to generate",
 )
