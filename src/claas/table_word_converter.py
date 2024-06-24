@@ -15,7 +15,6 @@ class TableWordConverter(CurriculumConverter):
         self._current_table = None
         self._current_table_total_duration = 0
         self._need_new_table = True
-        self._last_output = None
 
     def start_output(self, title: str) -> Document:
         document = Document()
@@ -38,8 +37,9 @@ class TableWordConverter(CurriculumConverter):
 
         self._need_new_table = True
 
-    def add_topic(self, output, contents: str, duration: str, methodik: str,
-            material: str):
+    def add_topic(
+        self, output, contents: str, duration: str, methodik: str, material: str
+    ):
         if self._need_new_table or self._current_table is None:
             self._create_new_table(output)
             self._need_new_table = False
@@ -52,7 +52,6 @@ class TableWordConverter(CurriculumConverter):
         row_cells[2].text = methodik
         row_cells[3].text = material
         self._set_cell_margins(row_cells)
-        self._last_output = "row"
 
     def add_remark(self, output, bemerkung: str):
         if self._current_table:
@@ -64,7 +63,6 @@ class TableWordConverter(CurriculumConverter):
         run.bold = True
         p.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
         self._need_new_table = True
-        self._last_output = "remark"
 
     def save(self, output_path):
         doc = self.convert()
@@ -82,7 +80,6 @@ class TableWordConverter(CurriculumConverter):
         self._set_cell_margins(hdr_cells)
         self._need_new_table = False
         self._current_table_total_duration = 0
-        self._last_output = "table"
 
     def _add_table_footer(self):
         # Write a table footer with the total duration
@@ -95,6 +92,7 @@ class TableWordConverter(CurriculumConverter):
         self._set_footer_style(row_cells)
         row_cells[0].paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         self._set_cell_margins(row_cells)
+        self._current_table = None
 
     @staticmethod
     def _set_header_style(cells):
