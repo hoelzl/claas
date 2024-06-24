@@ -4,7 +4,7 @@ from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Pt
+from docx.shared import Cm, Pt
 
 from claas.curriculum_converter import CurriculumConverter
 
@@ -18,6 +18,18 @@ class TableWordConverter(CurriculumConverter):
 
     def start_output(self, title: str) -> Document:
         document = Document()
+
+        # Set page size to A4
+        section = document.sections[0]
+        section.page_height = Cm(29.7)  # A4 height in cm
+        section.page_width = Cm(21.0)  # A4 width in cm
+
+        # Set margins
+        section.left_margin = Cm(2.0)
+        section.right_margin = Cm(2.0)
+        section.top_margin = Cm(2.0)
+        section.bottom_margin = Cm(2.0)
+
         document.add_heading(title, level=1)
         return document
 
@@ -73,9 +85,12 @@ class TableWordConverter(CurriculumConverter):
         self._current_table.style = "Table Grid"
         hdr_cells = self._current_table.rows[0].cells
         hdr_cells[0].text = "Inhalt"
+        hdr_cells[0].width = Cm(18)
         hdr_cells[1].text = "UE"
         hdr_cells[2].text = "Methodik/Didaktik"
+        hdr_cells[2].width = Cm(5)
         hdr_cells[3].text = "Materialien"
+        hdr_cells[3].width = Cm(8)
         self._set_header_style(hdr_cells)
         self._set_cell_margins(hdr_cells)
         self._need_new_table = False
