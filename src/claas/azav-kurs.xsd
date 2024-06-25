@@ -24,7 +24,7 @@
                     </xs:sequence>
                   </xs:complexType>
                 </xs:element>
-                <xs:element name="bemerkung" type="xs:string"/>
+                <xs:element name="abschnitt" type="xs:string"/>
               </xs:choice>
             </xs:sequence>
           </xs:complexType>

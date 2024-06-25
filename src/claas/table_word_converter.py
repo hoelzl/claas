@@ -65,13 +65,13 @@ class TableWordConverter(CurriculumConverter):
         row_cells[3].text = material
         self._set_cell_margins(row_cells)
 
-    def add_remark(self, output, bemerkung: str):
+    def add_remark(self, output, abschnitt: str):
         if self._current_table:
             self._add_table_footer()
             output.add_paragraph()  # Add space between tables
         # Add the remark as a bold paragraph
         p = output.add_paragraph()
-        run = p.add_run(bemerkung)
+        run = p.add_run(abschnitt)
         run.bold = True
         p.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
         self._need_new_table = True

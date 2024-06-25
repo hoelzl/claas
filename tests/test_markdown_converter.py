@@ -18,10 +18,10 @@ def test_markdown_converter_full(full_example):
         "\n"
         "- Thema 1 Inhalt (3 UE)\n"
         "\n"
-        "### Bemerkung 1\n"
+        "### abschnitt 1\n"
         "\n"
         "\n"
-        "### Bemerkung 2\n"
+        "### abschnitt 2\n"
         "\n"
         "- Thema 2 Inhalt (5 UE)"
     )

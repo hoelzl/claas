@@ -34,9 +34,9 @@ class CurriculumConverter(ABC):
                     self.add_topic(
                         output, contents, duration, methodik_text, material_text
                     )
-                elif element.tag.endswith("bemerkung"):
-                    bemerkung = element.text
-                    self.add_remark(output, bemerkung)
+                elif element.tag.endswith("abschnitt"):
+                    abschnitt = element.text
+                    self.add_remark(output, abschnitt)
 
             self.finalize_module(output)
         return self.finalize_output(output)
