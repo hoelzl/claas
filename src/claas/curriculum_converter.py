@@ -24,15 +24,16 @@ class CurriculumConverter(ABC):
             for element in module:
                 if element.tag.endswith("thema"):
                     contents = element.find("ns:inhalt", self.namespace).text
-                    duration = element.find("ns:dauer", self.namespace).text
+                    duration = element.find("ns:dauer", self.namespace)
                     method = element.find("ns:methodik", self.namespace)
                     material = element.find("ns:material", self.namespace)
 
+                    duration_text = self.get_default_text(duration, "1")
                     methodik_text = self.get_default_text(method, "Frontalunterricht")
                     material_text = self.get_default_text(material, "Folien, Notebooks")
 
                     self.add_topic(
-                        output, contents, duration, methodik_text, material_text
+                        output, contents, duration_text, methodik_text, material_text
                     )
                 elif element.tag.endswith("abschnitt"):
                     section = element.text

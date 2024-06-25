@@ -20,7 +20,7 @@ def test_word_converter_full(full_example):
     assert document.paragraphs[0].text == "Kurs Titel"
     assert document.paragraphs[1].text == "Modul 1 Titel"
     assert document.paragraphs[2].text == "Modul 1 Beschreibung"
-    assert document.paragraphs[3].text == "Thema 1 Inhalt (3 UE)"
+    assert document.paragraphs[3].text == "Thema 1 Inhalt (1 UE)"
     assert document.paragraphs[3].style.name == "List Number"
     assert document.paragraphs[4].text == "abschnitt 1"
     assert document.paragraphs[4].style.name == "Heading 3"

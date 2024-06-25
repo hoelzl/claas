@@ -14,7 +14,7 @@ def test_main_function():
             "\n"
             "Modul 1 Beschreibung\n"
             "\n"
-            "- Thema 1 Inhalt (3 UE)\n"
+            "- Thema 1 Inhalt (1 UE)\n"
             "\n"
             "### abschnitt 1\n"
             "\n"

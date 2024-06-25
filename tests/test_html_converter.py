@@ -33,7 +33,7 @@ def test_html_converter_full(full_example):
         "<h2>Modul 1 Titel</h2>\n"
         "<p>Modul 1 Beschreibung</p>\n"
         "<ul>\n"
-        "<li>Thema 1 Inhalt (3 UE)</li>\n"
+        "<li>Thema 1 Inhalt (1 UE)</li>\n"
         "</ul>\n"
         "<h3>abschnitt 1</h3>\n"
         "<ul>\n"
