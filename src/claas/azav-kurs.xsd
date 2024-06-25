@@ -18,7 +18,7 @@
                   <xs:complexType>
                     <xs:sequence>
                       <xs:element name="inhalt" type="xs:string"/>
-                      <xs:element name="dauer" type="xs:integer"/>
+                      <xs:element name="dauer" type="xs:integer" minOccurs="0" default="1"/>
                       <xs:element name="methodik" type="xs:string" minOccurs="0" default="Frontalunterricht"/>
                       <xs:element name="material" type="xs:string" minOccurs="0" default="Folien, Notebooks"/>
                     </xs:sequence>
