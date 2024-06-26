@@ -9,6 +9,7 @@ class CurriculumConverter(ABC):
         self.root = self.tree.getroot()
         self.namespace = {"ns": "http://xsd.coding-academy.com/claas/azav-kurs"}
         self.output = None
+        self.current_week = 0
 
     def convert(self):
         title = self.root.find("ns:titel", self.namespace).text
@@ -37,7 +38,11 @@ class CurriculumConverter(ABC):
                     )
                 elif element.tag.endswith("abschnitt"):
                     section = element.text
-                    self.add_remark(output, section)
+                    self.add_section(output, section)
+                elif element.tag.endswith("woche"):
+                    self.current_week += 1
+                    section = f"Woche {self.current_week}: {element.text}"
+                    self.add_section(output, section)
 
             self.finalize_module(output)
         return self.finalize_output(output)
@@ -73,5 +78,5 @@ class CurriculumConverter(ABC):
         pass
 
     @abstractmethod
-    def add_remark(self, output, text: str):
+    def add_section(self, output, text: str):
         pass

@@ -21,7 +21,7 @@ def test_markdown_converter_full(full_example):
         "### abschnitt 1\n"
         "\n"
         "\n"
-        "### abschnitt 2\n"
+        "### Woche 1: Inhalt\n"
         "\n"
         "- Thema 2 Inhalt (5 UE)"
     )

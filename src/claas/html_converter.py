@@ -31,7 +31,7 @@ class HtmlConverter(CurriculumConverter):
     ):
         output.append(f"<li>{contents} ({duration} UE)</li>")
 
-    def add_remark(self, output, text: str):
+    def add_section(self, output, text: str):
         output.append(f"</ul>")
         output.append(f"<h3>{text}</h3>")
         output.append(f"<ul>")

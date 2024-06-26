@@ -59,7 +59,7 @@ class TableHtmlConverter(CurriculumConverter):
             f"</tr>"
         )
 
-    def add_remark(self, output, abschnitt: str):
+    def add_section(self, output, abschnitt: str):
         if self._current_table:
             self._add_table_footer(output)
         output.append(f"<p><strong>{abschnitt}</strong></p>")

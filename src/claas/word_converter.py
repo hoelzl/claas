@@ -19,7 +19,7 @@ class WordConverter(CurriculumConverter):
     ):
         output.add_paragraph(f"{contents} ({duration} UE)", style="List Number")
 
-    def add_remark(self, output, text: str):
+    def add_section(self, output, text: str):
         output.add_heading(text, level=3)
 
     def finalize_output(self, output):

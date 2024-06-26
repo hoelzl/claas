@@ -18,5 +18,5 @@ class MarkdownConverter(CurriculumConverter):
     ):
         output.append(f"- {contents} ({duration} UE)")
 
-    def add_remark(self, output, text: str):
+    def add_section(self, output, text: str):
         output.append(f"\n### {text}\n")

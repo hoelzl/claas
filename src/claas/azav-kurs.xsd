@@ -25,6 +25,7 @@
                   </xs:complexType>
                 </xs:element>
                 <xs:element name="abschnitt" type="xs:string"/>
+                <xs:element name="woche" type="xs:string"/>
               </xs:choice>
             </xs:sequence>
           </xs:complexType>

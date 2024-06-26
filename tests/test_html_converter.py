@@ -38,7 +38,7 @@ def test_html_converter_full(full_example):
         "<h3>abschnitt 1</h3>\n"
         "<ul>\n"
         "</ul>\n"
-        "<h3>abschnitt 2</h3>\n"
+        "<h3>Woche 1: Inhalt</h3>\n"
         "<ul>\n"
         "<li>Thema 2 Inhalt (5 UE)</li>\n"
         "</ul>\n"

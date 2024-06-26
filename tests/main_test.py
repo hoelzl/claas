@@ -19,7 +19,7 @@ def test_main_function():
             "### abschnitt 1\n"
             "\n"
             "\n"
-            "### abschnitt 2\n"
+            "### Woche 1: Inhalt\n"
             "\n"
             "- Thema 2 Inhalt (5 UE)"
         )

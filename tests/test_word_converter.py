@@ -24,7 +24,7 @@ def test_word_converter_full(full_example):
     assert document.paragraphs[3].style.name == "List Number"
     assert document.paragraphs[4].text == "abschnitt 1"
     assert document.paragraphs[4].style.name == "Heading 3"
-    assert document.paragraphs[5].text == "abschnitt 2"
+    assert document.paragraphs[5].text == "Woche 1: Inhalt"
     assert document.paragraphs[5].style.name == "Heading 3"
     assert document.paragraphs[6].text == "Thema 2 Inhalt (5 UE)"
     assert document.paragraphs[6].style.name == "List Number"
