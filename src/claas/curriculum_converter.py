@@ -4,12 +4,13 @@ from typing import Any
 
 
 class CurriculumConverter(ABC):
-    def __init__(self, tree: ET.ElementTree):
+    def __init__(self, tree: ET.ElementTree, include_time=True):
         self.tree = tree
         self.root = self.tree.getroot()
         self.namespace = {"ns": "http://xsd.coding-academy.com/claas/azav-kurs"}
         self.output = None
         self.current_week = 0
+        self.include_time = include_time
 
     def convert(self):
         title = self.root.find("ns:titel", self.namespace).text

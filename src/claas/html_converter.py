@@ -29,7 +29,10 @@ class HtmlConverter(CurriculumConverter):
     def add_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
-        output.append(f"<li>{contents} ({duration} UE)</li>")
+        if self.include_time:
+            output.append(f"<li>{contents} ({duration} UE)</li>")
+        else:
+            output.append(f"<li>{contents}</li>")
 
     def add_section(self, output, text: str):
         output.append(f"</ul>")

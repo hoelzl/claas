@@ -16,7 +16,10 @@ class MarkdownConverter(CurriculumConverter):
     def add_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
-        output.append(f"- {contents} ({duration} UE)")
+        if self.include_time:
+            output.append(f"- {contents} ({duration} UE)")
+        else:
+            output.append(f"- {contents}")
 
     def add_section(self, output, text: str):
         output.append(f"\n### {text}\n")

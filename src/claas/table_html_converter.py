@@ -2,8 +2,8 @@ from claas.curriculum_converter import CurriculumConverter
 
 
 class TableHtmlConverter(CurriculumConverter):
-    def __init__(self, tree):
-        super().__init__(tree)
+    def __init__(self, tree, include_time=True):
+        super().__init__(tree, include_time=include_time)
         self._current_table = []
         self._current_table_total_duration = 0
         self._need_new_table = True

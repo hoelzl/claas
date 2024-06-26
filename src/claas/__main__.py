@@ -14,15 +14,18 @@ from claas.word_converter import WordConverter
 
 
 class FileChangeHandler(FileSystemEventHandler):
-    def __init__(self, input_file, output_formats, output_dir):
+    def __init__(self, input_file, output_formats, output_dir, include_time):
         self.input_file = input_file
         self.output_formats = output_formats
         self.output_dir = output_dir
+        self.include_time = include_time
 
     def on_modified(self, event):
         if event.src_path == str(self.input_file):
             print(f"Detected change in {self.input_file}. Converting...")
-            main_generate_outputs(self.input_file, self.output_formats, self.output_dir)
+            main_generate_outputs(
+                self.input_file, self.output_formats, self.output_dir, self.include_time
+            )
 
 
 converters = {
@@ -34,7 +37,7 @@ converters = {
 }
 
 
-def main_generate_outputs(input_file, output_formats, output_dir):
+def main_generate_outputs(input_file, output_formats, output_dir, include_time):
     try:
         input_path = Path(input_file)
         output_dir = Path(output_dir)
@@ -45,7 +48,7 @@ def main_generate_outputs(input_file, output_formats, output_dir):
 
         for fmt in output_formats:
             converter_class, suffix, doc_name = converters[fmt]
-            converter = converter_class(input_tree)
+            converter = converter_class(input_tree, include_time=include_time)
 
             output_path = output_dir / f"{input_path.stem}{suffix}"
             converter.save(output_path)
@@ -73,11 +76,19 @@ def main_generate_outputs(input_file, output_formats, output_dir):
     is_flag=True,
     help="Watch the file for changes and convert on modification",
 )
-def generate_outputs(input_file, output_formats, output_dir, watch):
-    main_generate_outputs(input_file, output_formats, output_dir)
+@click.option(
+    "--include-time",
+    "-t",
+    is_flag=True,
+    help="Include time information in the output",
+)
+def generate_outputs(input_file, output_formats, output_dir, watch, include_time):
+    main_generate_outputs(input_file, output_formats, output_dir, include_time)
 
     if watch:
-        event_handler = FileChangeHandler(input_file, output_formats, output_dir)
+        event_handler = FileChangeHandler(
+            input_file, output_formats, output_dir, include_time
+        )
         observer = Observer()
         observer.schedule(
             event_handler, path=str(Path(input_file).parent), recursive=False
