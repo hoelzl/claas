@@ -65,7 +65,7 @@ class TableWordConverter(CurriculumConverter):
         row_cells[3].text = material
         self._set_cell_margins(row_cells)
 
-    def add_remark(self, output, abschnitt: str):
+    def add_section(self, output, abschnitt: str):
         if self._current_table:
             self._add_table_footer()
             output.add_paragraph()  # Add space between tables
