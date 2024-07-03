@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET  # noqa
 from abc import ABC, abstractmethod
-from typing import Any, List, Tuple
+from typing import Any
 
 
 class CurriculumConverter(ABC):
@@ -12,21 +12,21 @@ class CurriculumConverter(ABC):
         self.current_week = 0
         self.include_time = include_time
         self.detailed = detailed
-        self.week_total_time = 0
+        self.weekly_course_hours = 0
+        self.total_course_hours = 0
 
     def convert(self):
         title = self.root.find("ns:titel", self.namespace).text
         output = self.start_output(title)
         for module in self.root.findall("ns:modul", self.namespace):
-            module_total_time = self.calculate_module_duration(module)
+            module_hours = self.calculate_module_hours(module)
+            self.total_course_hours += module_hours  # Add module hours to total
             module_title = module.find("ns:titel", self.namespace).text
             module_description = self.get_default_text(
                 module.find("ns:beschreibung", self.namespace), ""
             )
 
-            self.start_module(
-                output, module_title, module_description, module_total_time
-            )
+            self.start_module(output, module_title, module_description, module_hours)
 
             module_content = self.process_module_content(module)
             self.render_module_content(output, module_content)
@@ -129,7 +129,7 @@ class CurriculumConverter(ABC):
 
         return total_duration if total_duration > 0 else 1
 
-    def calculate_module_duration(self, module):
+    def calculate_module_hours(self, module):
         total_duration = 0
         for element in module:
             if element.tag.endswith("themengruppe"):

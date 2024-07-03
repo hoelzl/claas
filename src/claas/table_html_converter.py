@@ -28,6 +28,11 @@ class TableHtmlConverter(CurriculumConverter):
     def finalize_output(self, output) -> str:
         if self._current_table:
             self._add_table_footer(output)
+        if self.include_time:
+            output.append(
+                "<p><strong>Unterrichtseinheiten insgesamt: "
+                f"{self.total_course_hours}</strong></p>"
+            )
         output.append("</body>")
         output.append("</html>")
         return "\n".join(output)

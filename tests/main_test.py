@@ -57,5 +57,7 @@ def test_main_function_detailed():
             "### Woche 1: Wocheninhalt 1 (3 UE)\n"
             "\n"
             "- Thema 2.1 (2 UE)\n"
-            "- Thema 2.2 (1 UE)"
+            "- Thema 2.2 (1 UE)\n"
+            "\n"
+            "**Unterrichtseinheiten insgesamt: 7**"
         )

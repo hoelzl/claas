@@ -10,7 +10,8 @@ def test_word_converter_minimal_summary(minimal_example):
     assert document.paragraphs[1].text == "Modul 1 Titel (2 UE)"
     assert document.paragraphs[2].text == "Zusammenfassung 1 (2 UE)"
     assert document.paragraphs[2].style.name == "List Number"
-    assert len(document.paragraphs) == 3
+    assert document.paragraphs[3].text == "Unterrichtseinheiten insgesamt: 2"
+    assert len(document.paragraphs) == 4
 
 
 def test_word_converter_minimal_detailed(minimal_example):
@@ -21,7 +22,8 @@ def test_word_converter_minimal_detailed(minimal_example):
     assert document.paragraphs[1].text == "Modul 1 Titel (2 UE)"
     assert document.paragraphs[2].text == "Thema 1.1 (2 UE)"
     assert document.paragraphs[2].style.name == "List Number"
-    assert len(document.paragraphs) == 3
+    assert document.paragraphs[3].text == "Unterrichtseinheiten insgesamt: 2"
+    assert len(document.paragraphs) == 4
 
 
 def test_word_converter_full_summary(full_example):
@@ -39,7 +41,8 @@ def test_word_converter_full_summary(full_example):
     assert document.paragraphs[5].style.name == "Heading 3"
     assert document.paragraphs[6].text == "Zusammenfassung 2 (3 UE)"
     assert document.paragraphs[6].style.name == "List Number"
-    assert len(document.paragraphs) == 7
+    assert document.paragraphs[7].text == "Unterrichtseinheiten insgesamt: 7"
+    assert len(document.paragraphs) == 8
 
 
 def test_word_converter_full_detailed(full_example):
@@ -61,4 +64,5 @@ def test_word_converter_full_detailed(full_example):
     assert document.paragraphs[7].style.name == "List Number"
     assert document.paragraphs[8].text == "Thema 2.2 (1 UE)"
     assert document.paragraphs[8].style.name == "List Number"
-    assert len(document.paragraphs) == 9
+    assert document.paragraphs[9].text == "Unterrichtseinheiten insgesamt: 7"
+    assert len(document.paragraphs) == 10

@@ -36,6 +36,12 @@ class TableWordConverter(CurriculumConverter):
     def finalize_output(self, output) -> Document:
         if self._current_table:
             self._add_table_footer()
+        if self.include_time:
+            p = output.add_paragraph()
+            run = p.add_run(
+                f"Unterrichtseinheiten insgesamt: {self.total_course_hours}"
+            )
+            run.bold = True
         return output
 
     def start_module(self, output, title: str, description: str, total_time: int):

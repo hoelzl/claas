@@ -14,6 +14,7 @@ def test_html_converter_minimal_summary(minimal_example):
         "<ul>\n"
         "<li>Zusammenfassung 1 (2 UE)</li>\n"
         "</ul>\n"
+        "<p><strong>Unterrichtseinheiten insgesamt: 2</strong></p>\n"
         "</body>\n"
         "</html>"
     )
@@ -34,6 +35,7 @@ def test_html_converter_minimal_detailed(minimal_example):
         "<ul>\n"
         "<li>Thema 1.1 (2 UE)</li>\n"
         "</ul>\n"
+        "<p><strong>Unterrichtseinheiten insgesamt: 2</strong></p>\n"
         "</body>\n"
         "</html>"
     )
@@ -60,6 +62,7 @@ def test_html_converter_full_summary(full_example):
         "<ul>\n"
         "<li>Zusammenfassung 2 (3 UE)</li>\n"
         "</ul>\n"
+        "<p><strong>Unterrichtseinheiten insgesamt: 7</strong></p>\n"
         "</body>\n"
         "</html>"
     )
@@ -88,6 +91,7 @@ def test_html_converter_full_detailed(full_example):
         "<li>Thema 2.1 (2 UE)</li>\n"
         "<li>Thema 2.2 (1 UE)</li>\n"
         "</ul>\n"
+        "<p><strong>Unterrichtseinheiten insgesamt: 7</strong></p>\n"
         "</body>\n"
         "</html>"
     )

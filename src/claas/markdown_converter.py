@@ -1,4 +1,5 @@
 import re
+
 from claas.curriculum_converter import CurriculumConverter
 
 
@@ -7,6 +8,10 @@ class MarkdownConverter(CurriculumConverter):
         return [f"# {title}"]
 
     def finalize_output(self, output) -> str:
+        if self.include_time:
+            output.append(
+                f"\n\n**Unterrichtseinheiten insgesamt: {self.total_course_hours}**"
+            )
         result = "\n".join(output)
         result = re.sub(r"\n{3,}", "\n\n", result)
         return result

@@ -32,6 +32,12 @@ class WordConverter(CurriculumConverter):
             output.add_heading(text, level=3)
 
     def finalize_output(self, output):
+        if self.include_time:
+            p = output.add_paragraph()
+            run = p.add_run(
+                f"Unterrichtseinheiten insgesamt: {self.total_course_hours}"
+            )
+            run.bold = True
         return output
 
     def save(self, output_path):

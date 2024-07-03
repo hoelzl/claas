@@ -14,7 +14,19 @@ class HtmlConverter(CurriculumConverter):
         return prefix
 
     def finalize_output(self, output) -> str:
-        output.extend(["</body>", "</html>"])
+        total_hours = (
+            [
+                "<p><strong>Unterrichtseinheiten insgesamt: "
+                f"{self.total_course_hours}</strong></p>",
+            ]
+            if self.include_time
+            else []
+        )
+        postfix = total_hours + [
+            "</body>",
+            "</html>",
+        ]
+        output.extend(postfix)
         return "\n".join(output)
 
     def start_module(self, output, title: str, description: str, total_time: int):
