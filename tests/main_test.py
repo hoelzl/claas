@@ -9,13 +9,14 @@ def test_main_function_summary():
             "tests/full_example.xml",
             ["markdown"],
             temp_dir,
-            include_time=False,
-            detailed=False,
+            skip_time=True,
+            kinds=["summary"],
         )
         with open(f"{temp_dir}/full_example_summary.md") as f:
             content = f.read()
         assert content == (
             "# Kurs Titel\n"
+            "\n"
             "## Modul 1 Titel\n"
             "\n"
             "Modul 1 Beschreibung\n"
@@ -36,14 +37,15 @@ def test_main_function_detailed():
             "tests/full_example.xml",
             ["markdown"],
             temp_dir,
-            include_time=True,
-            detailed=True,
+            skip_time=False,
+            kinds=["detailed"],
         )
         with open(f"{temp_dir}/full_example_detailed.md") as f:
             content = f.read()
         assert content == (
             "# Kurs Titel\n"
-            "## Modul 1 Titel\n"
+            "\n"
+            "## Modul 1 Titel (7 UE)\n"
             "\n"
             "Modul 1 Beschreibung\n"
             "\n"
@@ -52,7 +54,7 @@ def test_main_function_detailed():
             "\n"
             "### Abschnitt 1\n"
             "\n"
-            "### Woche 1: Wocheninhalt 1\n"
+            "### Woche 1: Wocheninhalt 1 (3 UE)\n"
             "\n"
             "- Thema 2.1 (2 UE)\n"
             "- Thema 2.2 (1 UE)"

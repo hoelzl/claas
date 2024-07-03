@@ -38,12 +38,15 @@ class TableWordConverter(CurriculumConverter):
             self._add_table_footer()
         return output
 
-    def start_module(self, output, title: str, description: str):
+    def start_module(self, output, title: str, description: str, total_time: int):
         if self._current_table:
             self._add_table_footer()
             output.add_page_break()
 
-        output.add_heading(title, level=2)
+        if self.include_time and total_time:
+            output.add_heading(f"{title} ({total_time} UE)", level=2)
+        else:
+            output.add_heading(title, level=2)
         if description:
             output.add_paragraph(description)
 
@@ -65,13 +68,15 @@ class TableWordConverter(CurriculumConverter):
         row_cells[3].text = material
         self._set_cell_margins(row_cells)
 
-    def add_section(self, output, abschnitt: str):
+    def add_section(self, output, text: str, week_time: int = None):
         if self._current_table:
             self._add_table_footer()
             output.add_paragraph()  # Add space between tables
         # Add the remark as a bold paragraph
         p = output.add_paragraph()
-        run = p.add_run(abschnitt)
+        if self.include_time and week_time:
+            text = f"{text} ({week_time} UE)"
+        run = p.add_run(text)
         run.bold = True
         p.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
         self._need_new_table = True

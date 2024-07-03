@@ -17,8 +17,11 @@ class HtmlConverter(CurriculumConverter):
         output.extend(["</body>", "</html>"])
         return "\n".join(output)
 
-    def start_module(self, output, title: str, description: str):
-        output.append(f"<h2>{title}</h2>")
+    def start_module(self, output, title: str, description: str, total_time: int):
+        if self.include_time and total_time:
+            output.append(f"<h2>{title} ({total_time} UE)</h2>")
+        else:
+            output.append(f"<h2>{title}</h2>")
         if description:
             output.append(f"<p>{description}</p>")
 
@@ -36,5 +39,8 @@ class HtmlConverter(CurriculumConverter):
         else:
             output.append(f"<li>{contents}</li>")
 
-    def add_section(self, output, text: str):
-        output.append(f"<h3>{text}</h3>")
+    def add_section(self, output, text: str, week_time: int = None):
+        if self.include_time and week_time:
+            output.append(f"<h3>{text} ({week_time} UE)</h3>")
+        else:
+            output.append(f"<h3>{text}</h3>")

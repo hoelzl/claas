@@ -11,8 +11,11 @@ class MarkdownConverter(CurriculumConverter):
         result = re.sub(r"\n{3,}", "\n\n", result)
         return result
 
-    def start_module(self, output, title: str, description: str):
-        output.append(f"## {title}")
+    def start_module(self, output, title: str, description: str, total_time: int):
+        if self.include_time and total_time:
+            output.append(f"\n## {title} ({total_time} UE)")
+        else:
+            output.append(f"\n## {title}")
         if description:
             output.append(f"\n{description}\n")
 
@@ -24,5 +27,8 @@ class MarkdownConverter(CurriculumConverter):
         else:
             output.append(f"- {contents}")
 
-    def add_section(self, output, text: str):
-        output.append(f"\n### {text}\n")
+    def add_section(self, output, text: str, week_time: int = None):
+        if self.include_time and week_time:
+            output.append(f"\n### {text} ({week_time} UE)\n")
+        else:
+            output.append(f"\n### {text}\n")

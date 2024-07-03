@@ -9,8 +9,11 @@ class WordConverter(CurriculumConverter):
         document.add_heading(title, level=1)
         return document
 
-    def start_module(self, output, title: str, description: str):
-        output.add_heading(title, level=2)
+    def start_module(self, output, title: str, description: str, total_time: int):
+        if self.include_time and total_time:
+            output.add_heading(f"{title} ({total_time} UE)", level=2)
+        else:
+            output.add_heading(title, level=2)
         if description:
             output.add_paragraph(description)
 
@@ -22,8 +25,11 @@ class WordConverter(CurriculumConverter):
         else:
             output.add_paragraph(contents, style="List Number")
 
-    def add_section(self, output, text: str):
-        output.add_heading(text, level=3)
+    def add_section(self, output, text: str, week_time: int = None):
+        if self.include_time and week_time:
+            output.add_heading(f"{text} ({week_time} UE)", level=3)
+        else:
+            output.add_heading(text, level=3)
 
     def finalize_output(self, output):
         return output

@@ -32,11 +32,14 @@ class TableHtmlConverter(CurriculumConverter):
         output.append("</html>")
         return "\n".join(output)
 
-    def start_module(self, output, title: str, description: str):
+    def start_module(self, output, title: str, description: str, total_time: int):
         if self._current_table:
             self._add_table_footer(output)
 
-        output.append(f"<h2>{title}</h2>")
+        if self.include_time and total_time:
+            output.append(f"<h2>{title} ({total_time} UE)</h2>")
+        else:
+            output.append(f"<h2>{title}</h2>")
         if description:
             output.append(f"<p>{description}</p>")
 
@@ -59,10 +62,13 @@ class TableHtmlConverter(CurriculumConverter):
             f"</tr>"
         )
 
-    def add_section(self, output, abschnitt: str):
+    def add_section(self, output, text: str, week_time: int = None):
         if self._current_table:
             self._add_table_footer(output)
-        output.append(f"<p><strong>{abschnitt}</strong></p>")
+        if self.include_time and week_time:
+            output.append(f"<h3>{text} ({week_time} UE)</h3>")
+        else:
+            output.append(f"<p><strong>{text}</strong></p>")
         self._need_new_table = True
 
     def _create_new_table(self, output):
