@@ -3,28 +3,32 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import click
-from watchdog.events import FileSystemEventHandler
-from watchdog.observers import Observer
-
 from claas.html_converter import HtmlConverter
 from claas.markdown_converter import MarkdownConverter
 from claas.table_html_converter import TableHtmlConverter
 from claas.table_word_converter import TableWordConverter
 from claas.word_converter import WordConverter
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 
 
 class FileChangeHandler(FileSystemEventHandler):
-    def __init__(self, input_file, output_formats, output_dir, include_time):
+    def __init__(self, input_file, output_formats, output_dir, include_time, detailed):
         self.input_file = input_file
         self.output_formats = output_formats
         self.output_dir = output_dir
         self.include_time = include_time
+        self.detailed = detailed
 
     def on_modified(self, event):
         if event.src_path == str(self.input_file):
             print(f"Detected change in {self.input_file}. Converting...")
             main_generate_outputs(
-                self.input_file, self.output_formats, self.output_dir, self.include_time
+                self.input_file,
+                self.output_formats,
+                self.output_dir,
+                self.include_time,
+                self.detailed,
             )
 
 
@@ -37,7 +41,9 @@ converters = {
 }
 
 
-def main_generate_outputs(input_file, output_formats, output_dir, include_time):
+def main_generate_outputs(
+    input_file, output_formats, output_dir, include_time, detailed
+):
     try:
         input_path = Path(input_file)
         output_dir = Path(output_dir)
@@ -48,9 +54,14 @@ def main_generate_outputs(input_file, output_formats, output_dir, include_time):
 
         for fmt in output_formats:
             converter_class, suffix, doc_name = converters[fmt]
-            converter = converter_class(input_tree, include_time=include_time)
+            converter = converter_class(
+                input_tree, include_time=include_time, detailed=detailed
+            )
 
-            output_path = output_dir / f"{input_path.stem}{suffix}"
+            output_path = (
+                output_dir
+                / f"{input_path.stem}{'_detailed' if detailed else '_summary'}{suffix}"
+            )
             converter.save(output_path)
             print(f"{doc_name} saved to {output_path}")
     except Exception as e:
@@ -82,12 +93,21 @@ def main_generate_outputs(input_file, output_formats, output_dir, include_time):
     is_flag=True,
     help="Include time information in the output",
 )
-def generate_outputs(input_file, output_formats, output_dir, watch, include_time):
-    main_generate_outputs(input_file, output_formats, output_dir, include_time)
+@click.option(
+    "--detailed",
+    is_flag=True,
+    help="Generate detailed output (default is summary)",
+)
+def generate_outputs(
+    input_file, output_formats, output_dir, watch, include_time, detailed
+):
+    main_generate_outputs(
+        input_file, output_formats, output_dir, include_time, detailed
+    )
 
     if watch:
         event_handler = FileChangeHandler(
-            input_file, output_formats, output_dir, include_time
+            input_file, output_formats, output_dir, include_time, detailed
         )
         observer = Observer()
         observer.schedule(

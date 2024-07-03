@@ -21,20 +21,20 @@ class HtmlConverter(CurriculumConverter):
         output.append(f"<h2>{title}</h2>")
         if description:
             output.append(f"<p>{description}</p>")
-        output.append(f"<ul>")
 
-    def finalize_module(self, output):
-        output.append(f"</ul>")
+    def start_topic_list(self, output):
+        output.append("<ul>")
+
+    def end_topic_list(self, output):
+        output.append("</ul>")
 
     def add_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
-        if self.include_time:
+        if self.include_time and duration:
             output.append(f"<li>{contents} ({duration} UE)</li>")
         else:
             output.append(f"<li>{contents}</li>")
 
     def add_section(self, output, text: str):
-        output.append(f"</ul>")
         output.append(f"<h3>{text}</h3>")
-        output.append(f"<ul>")

@@ -2,7 +2,27 @@ from claas.html_converter import HtmlConverter
 from fixtures import full_example, minimal_example
 
 
-def test_html_converter_minimal(minimal_example):
+def test_html_converter_minimal_summary(minimal_example):
+    expected = (
+        "<html>\n"
+        "<head>\n"
+        "<title>Lehrplan: Kurs Titel</title>\n"
+        "</head>\n"
+        "<body>\n"
+        "<h1>Kurs Titel</h1>\n"
+        "<h2>Modul 1 Titel</h2>\n"
+        "<ul>\n"
+        "<li>Zusammenfassung 1 (2 UE)</li>\n"
+        "</ul>\n"
+        "</body>\n"
+        "</html>"
+    )
+    converter = HtmlConverter(minimal_example, detailed=False)
+
+    assert converter.convert() == expected
+
+
+def test_html_converter_minimal_detailed(minimal_example):
     expected = (
         "<html>\n"
         "<head>\n"
@@ -17,12 +37,12 @@ def test_html_converter_minimal(minimal_example):
         "</body>\n"
         "</html>"
     )
-    converter = HtmlConverter(minimal_example)
+    converter = HtmlConverter(minimal_example, detailed=True)
 
     assert converter.convert() == expected
 
 
-def test_html_converter_full(full_example):
+def test_html_converter_full_summary(full_example):
     expected = (
         "<html>\n"
         "<head>\n"
@@ -33,18 +53,44 @@ def test_html_converter_full(full_example):
         "<h2>Modul 1 Titel</h2>\n"
         "<p>Modul 1 Beschreibung</p>\n"
         "<ul>\n"
-        "<li>Thema 1 Inhalt (1 UE)</li>\n"
+        "<li>Zusammenfassung 1 (4 UE)</li>\n"
         "</ul>\n"
-        "<h3>abschnitt 1</h3>\n"
+        "<h3>Abschnitt 1</h3>\n"
+        "<h3>Woche 1: Wocheninhalt 1</h3>\n"
         "<ul>\n"
-        "</ul>\n"
-        "<h3>Woche 1: Inhalt</h3>\n"
-        "<ul>\n"
-        "<li>Thema 2 Inhalt (5 UE)</li>\n"
+        "<li>Zusammenfassung 2 (3 UE)</li>\n"
         "</ul>\n"
         "</body>\n"
         "</html>"
     )
-    converter = HtmlConverter(full_example)
+    converter = HtmlConverter(full_example, detailed=False)
+
+    assert converter.convert() == expected
+
+
+def test_html_converter_full_detailed(full_example):
+    expected = (
+        "<html>\n"
+        "<head>\n"
+        "<title>Lehrplan: Kurs Titel</title>\n"
+        "</head>\n"
+        "<body>\n"
+        "<h1>Kurs Titel</h1>\n"
+        "<h2>Modul 1 Titel</h2>\n"
+        "<p>Modul 1 Beschreibung</p>\n"
+        "<ul>\n"
+        "<li>Thema 1.1 (1 UE)</li>\n"
+        "<li>Thema 1.2 (3 UE)</li>\n"
+        "</ul>\n"
+        "<h3>Abschnitt 1</h3>\n"
+        "<h3>Woche 1: Wocheninhalt 1</h3>\n"
+        "<ul>\n"
+        "<li>Thema 2.1 (2 UE)</li>\n"
+        "<li>Thema 2.2 (1 UE)</li>\n"
+        "</ul>\n"
+        "</body>\n"
+        "</html>"
+    )
+    converter = HtmlConverter(full_example, detailed=True)
 
     assert converter.convert() == expected

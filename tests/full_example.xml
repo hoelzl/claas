@@ -6,16 +6,35 @@
   <modul>
     <titel>Modul 1 Titel</titel>
     <beschreibung>Modul 1 Beschreibung</beschreibung>
-    <thema>
-      <inhalt>Thema 1 Inhalt</inhalt>
-    </thema>
-    <abschnitt>abschnitt 1</abschnitt>
-    <woche>Inhalt</woche>
-    <thema>
-      <inhalt>Thema 2 Inhalt</inhalt>
-      <dauer>5</dauer>
-      <methodik>Gruppenarbeit</methodik>
-      <material>Handouts</material>
-    </thema>
+    <themengruppe>
+      <zusammenfassung>Zusammenfassung 1</zusammenfassung>
+      <detailthemen>
+        <thema>
+          <inhalt>Thema 1.1</inhalt>
+        </thema>
+        <thema>
+          <inhalt>Thema 1.2</inhalt>
+          <dauer>3</dauer>
+          <methodik>Gruppenarbeit</methodik>
+          <material>Handouts</material>
+        </thema>
+      </detailthemen>
+    </themengruppe>
+    <abschnitt>Abschnitt 1</abschnitt>
+    <woche>Wocheninhalt 1</woche>
+    <themengruppe>
+      <zusammenfassung>Zusammenfassung 2</zusammenfassung>
+      <detailthemen>
+        <thema>
+          <inhalt>Thema 2.1</inhalt>
+          <dauer>2</dauer>
+          <methodik>Frontalunterricht</methodik>
+        </thema>
+        <thema>
+          <inhalt>Thema 2.2</inhalt>
+          <material>Präsentation</material>
+        </thema>
+      </detailthemen>
+    </themengruppe>
   </modul>
 </kurs>

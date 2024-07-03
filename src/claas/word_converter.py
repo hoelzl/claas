@@ -17,7 +17,7 @@ class WordConverter(CurriculumConverter):
     def add_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
-        if self.include_time:
+        if self.include_time and duration:
             output.add_paragraph(f"{contents} ({duration} UE)", style="List Number")
         else:
             output.add_paragraph(contents, style="List Number")

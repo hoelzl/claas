@@ -5,9 +5,14 @@
   <titel>Kurs Titel</titel>
   <modul>
     <titel>Modul 1 Titel</titel>
-    <thema>
-      <inhalt>Thema 1.1</inhalt>
-      <dauer>2</dauer>
-    </thema>
+    <themengruppe>
+      <zusammenfassung>Zusammenfassung 1</zusammenfassung>
+      <detailthemen>
+        <thema>
+          <inhalt>Thema 1.1</inhalt>
+          <dauer>2</dauer>
+        </thema>
+      </detailthemen>
+    </themengruppe>
   </modul>
 </kurs>

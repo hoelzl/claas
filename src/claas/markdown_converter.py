@@ -1,3 +1,4 @@
+import re
 from claas.curriculum_converter import CurriculumConverter
 
 
@@ -6,7 +7,9 @@ class MarkdownConverter(CurriculumConverter):
         return [f"# {title}"]
 
     def finalize_output(self, output) -> str:
-        return "\n".join(output)
+        result = "\n".join(output)
+        result = re.sub(r"\n{3,}", "\n\n", result)
+        return result
 
     def start_module(self, output, title: str, description: str):
         output.append(f"## {title}")
@@ -16,7 +19,7 @@ class MarkdownConverter(CurriculumConverter):
     def add_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
-        if self.include_time:
+        if self.include_time and duration:
             output.append(f"- {contents} ({duration} UE)")
         else:
             output.append(f"- {contents}")

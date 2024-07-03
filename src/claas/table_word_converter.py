@@ -10,8 +10,8 @@ from claas.curriculum_converter import CurriculumConverter
 
 
 class TableWordConverter(CurriculumConverter):
-    def __init__(self, tree: ET.ElementTree, include_time=True):
-        super().__init__(tree, include_time=include_time)
+    def __init__(self, tree: ET.ElementTree, include_time=True, detailed=True):
+        super().__init__(tree, include_time=include_time, detailed=detailed)
         self._current_table = None
         self._current_table_total_duration = 0
         self._need_new_table = True
