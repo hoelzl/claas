@@ -14,6 +14,8 @@ class CurriculumConverter(ABC):
         self.detailed = detailed
         self.weekly_course_hours = 0
         self.total_course_hours = 0
+        self.method_default = "Frontalunterricht"
+        self.material_default = "Folien, Notebooks"
 
     def convert(self):
         title = self.root.find("ns:titel", self.namespace).text
@@ -76,10 +78,17 @@ class CurriculumConverter(ABC):
                     topic = self.process_theme(theme)
                     topics.append(topic)
             else:
-                topics.append((summary, "", "", ""))
+                topics.append((summary, "", self.method_default, self.material_default))
         else:
             total_duration = self.compute_total_duration(themengruppe)
-            topics.append((summary, str(total_duration), "", ""))
+            topics.append(
+                (
+                    summary,
+                    str(total_duration),
+                    self.method_default,
+                    self.material_default,
+                )
+            )
 
         return topics
 
@@ -90,10 +99,10 @@ class CurriculumConverter(ABC):
         material = theme.find("ns:material", self.namespace)
 
         duration_text = self.get_default_text(duration, "1")
-        methodik_text = self.get_default_text(method, "Frontalunterricht")
-        material_text = self.get_default_text(material, "Folien, Notebooks")
+        method_text = self.get_default_text(method, self.method_default)
+        material_text = self.get_default_text(material, self.material_default)
 
-        return contents, duration_text, methodik_text, material_text
+        return contents, duration_text, method_text, material_text
 
     def render_module_content(self, output, module_content):
         for item in module_content:
