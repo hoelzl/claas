@@ -50,22 +50,19 @@ def main_generate_outputs(input_file, output_formats, output_dir, skip_time, kin
         input_tree = ET.parse(input_path)
         if "all" in output_formats:
             output_formats = list(converters.keys())
-        if "both" in kinds:
-            kinds = ["summary", "detailed"]
+
+        if "all" in kinds:
+            kinds = ["summary", "detailed", "combined"]
 
         for fmt in output_formats:
             for kind in kinds:
-                detailed = kind == "detailed"
                 converter_class, suffix, doc_name = converters[fmt]
                 converter = converter_class(
-                    input_tree, include_time=not skip_time, detailed=detailed
+                    input_tree, include_time=not skip_time, output_format=kind
                 )
-                output_path = (
-                    output_dir / f"{input_path.stem}"
-                    f"{'_detailed' if detailed else '_summary'}{suffix}"
-                )
+                output_path = output_dir / f"{input_path.stem}_{kind}{suffix}"
                 converter.save(output_path)
-                print(f"{doc_name} saved to {output_path}")
+                print(f"{doc_name} ({kind}) saved to {output_path}")
     except Exception as e:
         print(f"Error: {e}")
 
@@ -99,8 +96,8 @@ def main_generate_outputs(input_file, output_formats, output_dir, skip_time, kin
     "--kinds",
     "-k",
     multiple=True,
-    type=click.Choice(["summary", "detailed", "both"]),
-    default=["both"],
+    type=click.Choice(["summary", "detailed", "combined", "all"]),
+    default=["detailed"],
     help="Kind of data to include in the output",
 )
 def generate_outputs(input_file, output_formats, output_dir, watch, skip_time, kinds):

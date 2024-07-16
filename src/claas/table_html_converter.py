@@ -2,8 +2,8 @@ from claas.curriculum_converter import CurriculumConverter
 
 
 class TableHtmlConverter(CurriculumConverter):
-    def __init__(self, tree, include_time=True, detailed=True):
-        super().__init__(tree, include_time=include_time, detailed=detailed)
+    def __init__(self, tree, include_time=True, output_format="detailed"):
+        super().__init__(tree, include_time=include_time, output_format=output_format)
         self._current_table = []
         self._current_table_total_duration = 0
         self._need_new_table = True
@@ -50,19 +50,38 @@ class TableHtmlConverter(CurriculumConverter):
 
         self._need_new_table = True
 
-    def add_topic(
-        self, output, contents: str, duration: str, methodik: str, material: str
-    ):
-        if self._need_new_table:
+    def add_topics(self, output, topics):
+        if topics:
             self._create_new_table(output)
-            self._need_new_table = False
+            for topic_type, topic in topics:
+                if topic_type == "summary":
+                    self.add_summary_topic(output, *topic)
+                else:
+                    self.add_detail_topic(output, *topic)
+            self._add_table_footer(output)
 
+    def add_summary_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
         self._current_table_total_duration += int(duration)
         self._current_table.append(
             f"<tr>"
-            f"<td>{contents}</td>"
+            f"<td><strong>{contents}</strong></td>"
             f"<td class='center'>{duration}</td>"
-            f"<td>{methodik}</td>"
+            f"<td>{method}</td>"
+            f"<td>{material}</td>"
+            f"</tr>"
+        )
+
+    def add_detail_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
+        self._current_table_total_duration += int(duration)
+        self._current_table.append(
+            f"<tr>"
+            f"<td style='padding-left: 20px;'>{contents}</td>"
+            f"<td class='center'>{duration}</td>"
+            f"<td>{method}</td>"
             f"<td>{material}</td>"
             f"</tr>"
         )

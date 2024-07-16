@@ -43,7 +43,29 @@ class HtmlConverter(CurriculumConverter):
     def end_topic_list(self, output):
         output.append("</ul>")
 
-    def add_topic(
+    def add_summary_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
+        if self.include_time and duration:
+            output.append(f"<li>{contents} ({duration} UE)</li>")
+        else:
+            output.append(f"<li>{contents}</li>")
+
+    def add_detail_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
+        if self.include_time and duration:
+            output.append(f"<li>{contents} ({duration} UE)</li>")
+        else:
+            output.append(f"<li>{contents}</li>")
+
+    def start_subtopic_list(self, output):
+        output.append("<ul>")
+
+    def end_subtopic_list(self, output):
+        output.append("</ul>")
+
+    def add_subtopic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
         if self.include_time and duration:

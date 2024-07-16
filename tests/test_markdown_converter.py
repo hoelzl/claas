@@ -11,7 +11,7 @@ def test_markdown_converter_minimal_summary(minimal_example):
         "\n"
         "**Unterrichtseinheiten insgesamt: 2**"
     )
-    converter = MarkdownConverter(minimal_example, detailed=False)
+    converter = MarkdownConverter(minimal_example, output_format="summary")
 
     assert converter.convert() == expected
 
@@ -25,7 +25,7 @@ def test_markdown_converter_minimal_detailed(minimal_example):
         "\n"
         "**Unterrichtseinheiten insgesamt: 2**"
     )
-    converter = MarkdownConverter(minimal_example, detailed=True)
+    converter = MarkdownConverter(minimal_example, output_format="detailed")
 
     assert converter.convert() == expected
 
@@ -48,7 +48,7 @@ def test_markdown_converter_full_summary(full_example):
         "\n"
         "**Unterrichtseinheiten insgesamt: 7**"
     )
-    converter = MarkdownConverter(full_example, detailed=False)
+    converter = MarkdownConverter(full_example, output_format="summary")
 
     assert converter.convert() == expected
 
@@ -73,6 +73,6 @@ def test_markdown_converter_full_detailed(full_example):
         "\n"
         "**Unterrichtseinheiten insgesamt: 7**"
     )
-    converter = MarkdownConverter(full_example, detailed=True)
+    converter = MarkdownConverter(full_example, output_format="detailed")
 
     assert converter.convert() == expected

@@ -1,4 +1,5 @@
 from docx import Document
+from docx.shared import Pt
 
 from claas.curriculum_converter import CurriculumConverter
 
@@ -17,13 +18,24 @@ class WordConverter(CurriculumConverter):
         if description:
             output.add_paragraph(description)
 
-    def add_topic(
+    def add_summary_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
+        paragraph = output.add_paragraph(style="List Bullet")
         if self.include_time and duration:
-            output.add_paragraph(f"{contents} ({duration} UE)", style="List Number")
+            paragraph.text = f"{contents} ({duration} UE)"
         else:
-            output.add_paragraph(contents, style="List Number")
+            paragraph.text = contents
+
+    def add_detail_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
+        paragraph = output.add_paragraph(style="List Bullet 2")
+        if self.include_time and duration:
+            paragraph.text = f"{contents} ({duration} UE)"
+        else:
+            paragraph.text = contents
+        paragraph.style.font.size = Pt(10)  # Make subtopics slightly smaller
 
     def add_section(self, output, text: str, week_time: int = None):
         if self.include_time and week_time:

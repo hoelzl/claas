@@ -24,7 +24,7 @@ class MarkdownConverter(CurriculumConverter):
         if description:
             output.append(f"\n{description}\n")
 
-    def add_topic(
+    def add_summary_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
         if self.include_time and duration:
@@ -32,8 +32,24 @@ class MarkdownConverter(CurriculumConverter):
         else:
             output.append(f"- {contents}")
 
+    def add_detail_topic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
+        if self.include_time and duration:
+            output.append(f"  - {contents} ({duration} UE)")
+        else:
+            output.append(f"  - {contents}")
+
     def add_section(self, output, text: str, week_time: int = None):
         if self.include_time and week_time:
             output.append(f"\n### {text} ({week_time} UE)\n")
         else:
             output.append(f"\n### {text}\n")
+
+    def add_subtopic(
+        self, output, contents: str, duration: str, method: str, material: str
+    ):
+        if self.include_time and duration:
+            output.append(f"  - {contents} ({duration} UE)")
+        else:
+            output.append(f"  - {contents}")
