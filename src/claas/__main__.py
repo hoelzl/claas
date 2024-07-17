@@ -63,8 +63,8 @@ def main_generate_outputs(
     output_dir,
     skip_time,
     kinds,
-    create_index,
-    overwrite_index,
+    create_index=False,
+    overwrite_index=False,
 ):
     try:
         input_path = Path(input_file)
