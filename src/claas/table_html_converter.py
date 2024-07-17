@@ -1,3 +1,5 @@
+import warnings
+
 from claas.curriculum_converter import CurriculumConverter
 
 
@@ -63,7 +65,12 @@ class TableHtmlConverter(CurriculumConverter):
     def add_summary_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
-        self._current_table_total_duration += int(duration)
+        try:
+            duration_value = int(duration)
+        except ValueError:
+            duration_value = 0
+            duration += " (ungültig)"
+        self._current_table_total_duration += duration_value
         self._current_table.append(
             f"<tr>"
             f"<td><strong>{contents}</strong></td>"
@@ -76,7 +83,12 @@ class TableHtmlConverter(CurriculumConverter):
     def add_detail_topic(
         self, output, contents: str, duration: str, method: str, material: str
     ):
-        self._current_table_total_duration += int(duration)
+        try:
+            duration_value = int(duration)
+        except ValueError:
+            duration += " (ungültig)"
+            duration_value = 0
+        self._current_table_total_duration += duration_value
         self._current_table.append(
             f"<tr>"
             f"<td style='padding-left: 20px;'>{contents}</td>"

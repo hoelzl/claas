@@ -34,7 +34,7 @@ def test_markdown_converter_full_summary(full_example):
     expected = (
         "# Kurs Titel\n"
         "\n"
-        "## Modul 1 Titel (7 UE)\n"
+        "## Modul 1 Titel (9 UE)\n"
         "\n"
         "Modul 1 Beschreibung\n"
         "\n"
@@ -42,11 +42,13 @@ def test_markdown_converter_full_summary(full_example):
         "\n"
         "### Abschnitt 1\n"
         "\n"
-        "### Woche 1: Wocheninhalt 1 (3 UE)\n"
+        "### Woche 1: Wocheninhalt 1 (5 UE)\n"
         "\n"
         "- Zusammenfassung 2 (3 UE)\n"
+        "- Zusammenfassung 3 (1 UE)\n"
+        "- Zusammenfassung 4 (1 UE)\n"
         "\n"
-        "**Unterrichtseinheiten insgesamt: 7**"
+        "**Unterrichtseinheiten insgesamt: 9**"
     )
     converter = MarkdownConverter(full_example, output_format="summary")
 
@@ -57,7 +59,7 @@ def test_markdown_converter_full_detailed(full_example):
     expected = (
         "# Kurs Titel\n"
         "\n"
-        "## Modul 1 Titel (7 UE)\n"
+        "## Modul 1 Titel (9 UE)\n"
         "\n"
         "Modul 1 Beschreibung\n"
         "\n"
@@ -66,12 +68,14 @@ def test_markdown_converter_full_detailed(full_example):
         "\n"
         "### Abschnitt 1\n"
         "\n"
-        "### Woche 1: Wocheninhalt 1 (3 UE)\n"
+        "### Woche 1: Wocheninhalt 1 (4 UE)\n"
         "\n"
         "- Thema 2.1 (2 UE)\n"
         "- Thema 2.2 (1 UE)\n"
+        "- Zusammenfassung 3\n"
+        "- (kein Text) (1 UE)\n"
         "\n"
-        "**Unterrichtseinheiten insgesamt: 7**"
+        "**Unterrichtseinheiten insgesamt: 9**"
     )
     converter = MarkdownConverter(full_example, output_format="detailed")
 

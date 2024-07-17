@@ -1,3 +1,5 @@
+import warnings
+
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.oxml import OxmlElement
@@ -103,7 +105,12 @@ class TableWordConverter(CurriculumConverter):
         material: str,
         is_summary: bool,
     ):
-        self._current_table_total_duration += int(duration)
+        try:
+            duration_value = int(duration)
+        except ValueError:
+            duration_value = 0
+            duration += " (ungültig)"
+        self._current_table_total_duration += duration_value
         row_cells = table.add_row().cells
         row_cells[0].text = contents
         if is_summary:
@@ -164,6 +171,7 @@ class TableWordConverter(CurriculumConverter):
 
     @staticmethod
     def _set_header_style(cells):
+        assert cells is not None, "Cells must not be None to set header style."
         for cell in cells:
             cell_paragraph = cell.paragraphs[0]
             cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
@@ -176,6 +184,7 @@ class TableWordConverter(CurriculumConverter):
 
     @staticmethod
     def _set_footer_style(cells):
+        assert cells is not None, "Cells must not be None to set footer style."
         for cell in cells:
             cell_paragraph = cell.paragraphs[0]
             cell_paragraph.alignment = (
@@ -192,6 +201,7 @@ class TableWordConverter(CurriculumConverter):
 
     @staticmethod
     def _set_cell_margins(cells, top=100, start=100, bottom=100, end=100):
+        assert cells is not None, "Cells must not be None to set cell margins."
         for cell in cells:
             tc = cell._element
             tcPr = tc.get_or_add_tcPr()

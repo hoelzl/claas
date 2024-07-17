@@ -36,5 +36,16 @@
         </thema>
       </detailthemen>
     </themengruppe>
+    <themengruppe>
+      <zusammenfassung>Zusammenfassung 3</zusammenfassung>
+    </themengruppe>
+    <themengruppe>
+      <zusammenfassung>Zusammenfassung 4</zusammenfassung>
+      <detailthemen>
+        <thema>
+          <inhalt></inhalt>
+        </thema>
+      </detailthemen>
+    </themengruppe>
   </modul>
 </kurs>

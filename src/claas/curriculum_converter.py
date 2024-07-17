@@ -40,11 +40,15 @@ class CurriculumConverter(ABC):
         return self.finalize_output(output)
 
     def process_module_content(self, module):
+        assert module is not None, "Module must not be None to process its content."
         content = []
         current_week = None
         current_topics = []
 
         for element in module:
+            assert (
+                element is not None
+            ), "Element must not be None to process its content."
             if element.tag.endswith("themengruppe"):
                 topics = self.process_themengruppe(element)
                 current_topics.extend(topics)
@@ -106,6 +110,7 @@ class CurriculumConverter(ABC):
         return topics
 
     def render_module_content(self, output, module_content):
+        assert module_content is not None, "Module content must not be None."
         for item in module_content:
             if item[0] == "section":
                 self.add_section(output, item[1])
@@ -138,18 +143,23 @@ class CurriculumConverter(ABC):
             self.end_topic_list(output)
 
     def process_theme(self, theme):
-        contents = theme.find("ns:inhalt", self.namespace).text
+        assert theme is not None, "Theme must not be None to process its content."
+        contents = theme.find("ns:inhalt", self.namespace)
         duration = theme.find("ns:dauer", self.namespace)
         method = theme.find("ns:methodik", self.namespace)
         material = theme.find("ns:material", self.namespace)
 
+        contents_text = self.get_default_text(contents, "(kein Text)")
         duration_text = self.get_default_text(duration, "1")
         method_text = self.get_default_text(method, self.method_default)
         material_text = self.get_default_text(material, self.material_default)
 
-        return contents, duration_text, method_text, material_text
+        return contents_text, duration_text, method_text, material_text
 
     def compute_total_duration(self, themengruppe):
+        assert themengruppe is not None, (
+            "Themengruppe must not be None to compute " "its duration."
+        )
         detail_themes = themengruppe.find("ns:detailthemen", self.namespace)
         if detail_themes is None:
             return 1
@@ -163,6 +173,7 @@ class CurriculumConverter(ABC):
         return total_duration if total_duration > 0 else 1
 
     def calculate_module_hours(self, module):
+        assert module is not None, "Module must not be None to calculate its hours."
         total_duration = 0
         for element in module:
             if element.tag.endswith("themengruppe"):
@@ -176,7 +187,11 @@ class CurriculumConverter(ABC):
 
     @staticmethod
     def get_default_text(element, default):
-        return element.text if element is not None else default
+        return (
+            element.text
+            if element is not None and element.text is not None
+            else default
+        )
 
     @abstractmethod
     def start_output(self, title: str):

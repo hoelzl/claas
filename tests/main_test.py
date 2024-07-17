@@ -27,7 +27,9 @@ def test_main_function_summary():
             "\n"
             "### Woche 1: Wocheninhalt 1\n"
             "\n"
-            "- Zusammenfassung 2"
+            "- Zusammenfassung 2\n"
+            "- Zusammenfassung 3\n"
+            "- Zusammenfassung 4"
         )
 
 
@@ -45,7 +47,7 @@ def test_main_function_detailed():
         assert content == (
             "# Kurs Titel\n"
             "\n"
-            "## Modul 1 Titel (7 UE)\n"
+            "## Modul 1 Titel (9 UE)\n"
             "\n"
             "Modul 1 Beschreibung\n"
             "\n"
@@ -54,10 +56,12 @@ def test_main_function_detailed():
             "\n"
             "### Abschnitt 1\n"
             "\n"
-            "### Woche 1: Wocheninhalt 1 (3 UE)\n"
+            "### Woche 1: Wocheninhalt 1 (4 UE)\n"
             "\n"
             "- Thema 2.1 (2 UE)\n"
             "- Thema 2.2 (1 UE)\n"
+            "- Zusammenfassung 3\n"
+            "- (kein Text) (1 UE)\n"
             "\n"
-            "**Unterrichtseinheiten insgesamt: 7**"
+            "**Unterrichtseinheiten insgesamt: 9**"
         )
