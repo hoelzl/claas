@@ -85,7 +85,9 @@ class CurriculumConverter(ABC):
         return content
 
     def process_themengruppe(self, themengruppe):
-        summary = themengruppe.find("ns:zusammenfassung", self.namespace).text
+        summary = self.get_default_text(
+            themengruppe.find("ns:zusammenfassung", self.namespace), "(kein Text)"
+        )
         topics = []
 
         if self.output_format in ["detailed", "combined"]:
