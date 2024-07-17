@@ -42,7 +42,30 @@ converters = {
 }
 
 
-def main_generate_outputs(input_file, output_formats, output_dir, skip_time, kinds):
+def create_index_html(output_dir, generated_files, overwrite_index):
+    index_path = output_dir / "index.html"
+    if index_path.exists() and not overwrite_index:
+        print("Index file already exists. Use --overwrite-index to replace it.")
+        return
+
+    with open(index_path, "w") as f:
+        f.write("<html><head><title>Generated Files Index</title></head><body>")
+        f.write("<h1>Generated Files Index</h1><ul>")
+        for file in generated_files:
+            f.write(f'<li><a href="{file.name}">{file.name}</a></li>')
+        f.write("</ul></body></html>")
+    print(f"Index file created at {index_path}")
+
+
+def main_generate_outputs(
+    input_file,
+    output_formats,
+    output_dir,
+    skip_time,
+    kinds,
+    create_index,
+    overwrite_index,
+):
     try:
         input_path = Path(input_file)
         output_dir = Path(output_dir)
@@ -54,6 +77,8 @@ def main_generate_outputs(input_file, output_formats, output_dir, skip_time, kin
         if "all" in kinds:
             kinds = ["summary", "detailed", "combined"]
 
+        generated_files = []
+
         for fmt in output_formats:
             for kind in kinds:
                 converter_class, suffix, doc_name = converters[fmt]
@@ -62,7 +87,12 @@ def main_generate_outputs(input_file, output_formats, output_dir, skip_time, kin
                 )
                 output_path = output_dir / f"{input_path.stem}_{kind}{suffix}"
                 converter.save(output_path)
+                generated_files.append(output_path)
                 print(f"{doc_name} ({kind}) saved to {output_path}")
+
+        if create_index:
+            create_index_html(output_dir, generated_files, overwrite_index)
+
     except Exception as e:
         print(f"Error: {e}")
 
@@ -100,8 +130,36 @@ def main_generate_outputs(input_file, output_formats, output_dir, skip_time, kin
     default=["detailed"],
     help="Kind of data to include in the output",
 )
-def generate_outputs(input_file, output_formats, output_dir, watch, skip_time, kinds):
-    main_generate_outputs(input_file, output_formats, output_dir, skip_time, kinds)
+@click.option(
+    "--skip-index",
+    is_flag=True,
+    help="Skip creating an index.html file with links to all generated files",
+)
+@click.option(
+    "--overwrite-index",
+    is_flag=True,
+    help="Overwrite existing index.html file",
+)
+def generate_outputs(
+    input_file,
+    output_formats,
+    output_dir,
+    watch,
+    skip_time,
+    kinds,
+    skip_index,
+    overwrite_index,
+):
+    create_index = not skip_index
+    main_generate_outputs(
+        input_file,
+        output_formats,
+        output_dir,
+        skip_time,
+        kinds,
+        create_index,
+        overwrite_index,
+    )
 
     if watch:
         event_handler = FileChangeHandler(
