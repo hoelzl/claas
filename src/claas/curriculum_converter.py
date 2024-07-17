@@ -31,13 +31,23 @@ class CurriculumConverter(ABC):
                 module.find("ns:beschreibung", self.namespace), ""
             )
 
-            self.start_module(output, module_title, module_description, module_hours)
+            self.end_details_and_start_module(
+                output, module_title, module_description, module_hours
+            )
 
             module_content = self.process_module_content(module)
             self.render_module_content(output, module_content)
 
             self.finalize_module(output)
         return self.finalize_output(output)
+
+    def end_details_and_start_module(
+        self, output, module_title, module_description, module_hours
+    ):
+        if self.processing_detail_topics:
+            self.end_topic_list(output)
+            self.processing_detail_topics = False
+        self.start_module(output, module_title, module_description, module_hours)
 
     def process_module_content(self, module):
         assert module is not None, "Module must not be None to process its content."
@@ -106,14 +116,13 @@ class CurriculumConverter(ABC):
                     ),
                 ),
             )
-
         return topics
 
     def render_module_content(self, output, module_content):
         assert module_content is not None, "Module content must not be None."
         for item in module_content:
             if item[0] == "section":
-                self.add_section(output, item[1])
+                self.end_details_and_add_section(output, item[1])
             elif item[0] == "week":
                 week_text, topics = item[1], item[2]
                 self.current_week += 1
@@ -121,10 +130,16 @@ class CurriculumConverter(ABC):
                     int(topic[1][1]) for topic in topics if topic[1][1]
                 )
                 section = f"Woche {self.current_week}: {week_text}"
-                self.add_section(output, section, week_total_time)
+                self.end_details_and_add_section(output, section, week_total_time)
                 self.add_topics(output, topics)
             elif item[0] == "topics":
                 self.add_topics(output, item[1])
+
+    def end_details_and_add_section(self, output, section, week_time=None):
+        if self.processing_detail_topics:
+            self.end_topic_list(output)
+            self.processing_detail_topics = False
+        self.add_section(output, section, week_time)
 
     def add_topics(self, output, topics):
         if topics:
