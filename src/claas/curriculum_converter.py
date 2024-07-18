@@ -25,7 +25,7 @@ class CurriculumConverter(ABC):
         output = self.start_output(title)
         for module in self.root.findall("ns:modul", self.namespace):
             module_hours = self.calculate_module_hours(module)
-            self.total_course_hours += module_hours  # Add module hours to total
+            self.total_course_hours += module_hours
             module_title = module.find("ns:titel", self.namespace).text
             module_description = self.get_default_text(
                 module.find("ns:beschreibung", self.namespace), ""
@@ -129,7 +129,9 @@ class CurriculumConverter(ABC):
                 week_text, topics = item[1], item[2]
                 self.current_week += 1
                 week_total_time = sum(
-                    int(topic[1][1]) for topic in topics if topic[1][1]
+                    int(topic[1][1])
+                    for topic in topics
+                    if topic[0] == "detail" and topic[1][1]
                 )
                 section = f"Woche {self.current_week}: {week_text}"
                 self.end_details_and_add_section(output, section, week_total_time)
@@ -179,7 +181,7 @@ class CurriculumConverter(ABC):
         )
         detail_themes = themengruppe.find("ns:detailthemen", self.namespace)
         if detail_themes is None:
-            return 1
+            return 0
 
         total_duration = 0
         for theme in detail_themes.findall("ns:thema", self.namespace):
